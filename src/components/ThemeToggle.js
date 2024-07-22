@@ -1,35 +1,32 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function ThemeToggle() {
-  const [isDarkMode, setIsDarkMode] = useState(true); // Default to dark mode
+const ThemeToggle = () => {
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    const darkModePreference = localStorage.getItem('darkMode');
-    if (darkModePreference !== null) {
-      const darkModeEnabled = darkModePreference === 'true';
-      setIsDarkMode(darkModeEnabled);
-      document.documentElement.classList.toggle('dark', darkModeEnabled);
+    // Check the initial theme from localStorage or prefers-color-scheme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setDarkMode(savedTheme === 'dark');
     } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setIsDarkMode(prefersDark);
-      document.documentElement.classList.toggle('dark', prefersDark);
+      setDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
     }
   }, []);
 
-  const toggleDarkMode = () => {
-    const newDarkMode = !isDarkMode;
-    setIsDarkMode(newDarkMode);
-    localStorage.setItem('darkMode', newDarkMode);
-    document.documentElement.classList.toggle('dark', newDarkMode);
-  };
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode);
+    localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
 
   return (
     <button
-      onClick={toggleDarkMode}
-      className="p-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded"
+      onClick={() => setDarkMode(!darkMode)}
+      className="p-2 rounded bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 transition-colors duration-300"
     >
-      {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+      {darkMode ? 'Light Mode' : 'Dark Mode'}
     </button>
   );
-}
+};
+
+export default ThemeToggle;

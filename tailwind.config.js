@@ -1,22 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  mode: 'jit',
+  darkMode: 'class', // Use 'media' for system-based dark mode
   content: [
-    './src/**/*.{js,ts,jsx,tsx}',
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
+    './src/**/*.{js,ts,jsx,tsx}', // Adjust if necessary
   ],
-  darkMode: 'class', // Use 'class' for manual dark mode toggling
   theme: {
     extend: {
       colors: {
-        primary: '#1D4ED8',
-        secondary: '#F59E0B',
-        background: '#F9FAFB',
-        darkBackground: '#1A202C',
-        darkText: '#F7FAFC',
+        'background': 'rgb(var(--background))',
+        'foreground': 'rgb(var(--foreground))',
       },
     },
   },
-
-};
+  plugins: [],
+}

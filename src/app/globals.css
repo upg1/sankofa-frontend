@@ -2,49 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Default light mode styles */
-html {
-  background-color: #F9FAFB; /* Light mode background */
-  color: #1A202C; /* Light mode text color */
+:root {
+  --foreground-light: 0, 0, 0; /* Black for light mode */
+  --foreground-dark: 255, 255, 255; /* White for dark mode */
+  --background-light: 255, 255, 255; /* White for light mode */
+  --background-dark: 0, 0, 0; /* Black for dark mode */
 }
 
-/* Dark mode styles */
 @media (prefers-color-scheme: dark) {
-  html {
-    background-color: #1A202C; /* Dark mode background */
-    color: #F7FAFC; /* Dark mode text color */
+  :root {
+    --foreground: var(--foreground-dark);
+    --background: var(--background-dark);
   }
 }
 
-/* Dark mode utility classes */
-.bg-darkBackground {
-  background-color: #1A202C; /* Dark mode background */
+@media (prefers-color-scheme: light) {
+  :root {
+    --foreground: var(--foreground-light);
+    --background: var(--background-light);
+  }
 }
 
-.text-darkText {
-  color: #F7FAFC; /* Dark mode text color */
-}
-
-.card-dark {
-  background-color: #2D3748; /* Dark mode card background */
-  color: #E2E8F0; /* Dark mode card text color */
-}
-
-/* Light mode utility classes */
-.bg-lightBackground {
-  background-color: #F9FAFB; /* Light mode background */
-}
-
-.text-lightText {
-  color: #1A202C; /* Light mode text color */
-}
-
-.card-light {
-  background-color: #FFFFFF; /* Light mode card background */
-  color: #2D3748; /* Light mode card text color */
-}
-
-/* Global body styles for smooth transitions */
 body {
-  transition: background-color 0.3s, color 0.3s;
+  color: rgb(var(--foreground));
+  background-color: rgb(var(--background));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }
